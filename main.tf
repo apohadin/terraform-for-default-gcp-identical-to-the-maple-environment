@@ -1,6 +1,6 @@
 provider "google" {
-  credentials = file("fiery-azimuth-267318-2b1a7e9397db.json")
-  project     = "fiery-azimuth-267318"
+  credentials = file("key.json")
+  project     = "my-project-267318"
   region      = "europe-west2"
   zone 	      = "europe-west2-a"
 }
@@ -86,7 +86,7 @@ resource "google_compute_instance" "enterprise" {
   }
 
   metadata = {
-    sshKeys = "neil:${file("id_rsa.pub")}"
+    sshKeys = "mydeployuser:${file("mydeployuser.pub")}"
   }
 
  metadata_startup_script = "sudo yum install httpd -y;sudo hostnamectl set-hostname enterprise1.erich.com;useradd -d /home/neil neil"
@@ -121,13 +121,13 @@ resource "google_compute_instance" "target" {
       connection {
 				  type     = "ssh"
           host        = self.network_interface[0].access_config[0].nat_ip
-				  user     = "neil"
-				  private_key = "${file("~/.ssh/id_rsa")}"
+				  user     = "mydeployuser"
+				  private_key = "${file("~/.ssh/mydeployuser")}"
        }
     }
 
   metadata = {
-    sshKeys = "neil:${file("id_rsa.pub")}"
+    sshKeys = "mydeployuser:${file("mydeployuser.pub")}"
   }
 
   metadata_startup_script = "sudo yum install httpd -y;sudo hostnamectl set-hostname target1.erich.com;useradd -d /home/neil neil;sudo yum install docker -y;sudo systemctl enable docker;sudo systemctl start docker"
