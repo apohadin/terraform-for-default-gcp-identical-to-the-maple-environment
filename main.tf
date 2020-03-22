@@ -86,7 +86,7 @@ resource "google_compute_instance" "enterprise" {
   }
 
   metadata = {
-    sshKeys = "neil:${file("id_rsa.pub")}"
+    sshKeys = "mydeployuser:${file("mydeployuser.pub")}"
   }
 
  metadata_startup_script = "sudo yum install httpd -y;sudo hostnamectl set-hostname enterprise1.erich.com;useradd -d /home/neil neil"
