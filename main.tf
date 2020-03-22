@@ -86,7 +86,7 @@ resource "google_compute_instance" "enterprise" {
   }
 
   metadata = {
-    sshKeys = "mydeployuser:${file("mydeployuser.pub")}"
+    sshKeys = "mydeployuser:${file("~/.ssh/mydeployuser.pub")}"
   }
 
  metadata_startup_script = "sudo yum install httpd -y;sudo hostnamectl set-hostname enterprise1.erich.com;useradd -d /home/neil neil"
@@ -128,10 +128,10 @@ resource "google_compute_instance" "target" {
 
 
   metadata = {
-    sshKeys = "neil:${file("mydeployuser.pub")}"
+    sshKeys = "mydeployuser:${file("~/.ssh/mydeployuser.pub")}"
   }
 
-  metadata_startup_script = "sudo yum install httpd -y;sudo hostnamectl set-hostname target1.erich.com;useradd -d /home/neil neil;sudo yum install docker -y;sudo systemctl enable docker;sudo systemctl start docker"
+  metadata_startup_script = "sudo yum install httpd -y;sudo hostnamectl set-hostname target1.erich.com;useradd -d /home/mydeployuser mydeployuser;sudo yum install docker -y;sudo systemctl enable docker;sudo systemctl start docker"
 
   provisioner "remote-exec" {
     on_failure = "continue"
