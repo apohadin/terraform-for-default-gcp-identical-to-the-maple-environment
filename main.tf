@@ -1,6 +1,6 @@
 provider "google" {
-  credentials = file("fiery-azimuth-267318-2b1a7e9397db.json")
-  project     = "fiery-azimuth-267318"
+  credentials = file("myjasonfile.json")
+  project     = "my project"
   region      = "europe-west2"
   zone 	      = "europe-west2-a"
 }
